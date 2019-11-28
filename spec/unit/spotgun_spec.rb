@@ -26,7 +26,7 @@ RSpec.describe Spotgun do
 
       it "drains the node" do
         expect(kernel).to receive(:system).with(
-          "/usr/bin/kubectl",
+          "/usr/local/bin/kubectl",
           "drain", node_name,
           "--grace-period=119",
           "--force",
