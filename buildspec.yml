@@ -1,0 +1,25 @@
+version: 0.2
+
+env:
+  variables:
+    REPO: 789035092620.dkr.ecr.us-east-1.amazonaws.com/spotgun
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - git reset --hard
+      - cd docker/spotgun
+      - $(aws ecr get-login --region ap-northeast-1 --no-include-email)
+      - $(aws ecr get-login --region us-east-1 --no-include-email)
+      - git rev-parse HEAD > REVISION
+      - docker pull "${REPO}:latest" || true
+  build:
+    commands:
+      - docker build --tag "${REPO}:latest" --tag "${REPO}:$(cat REVISION)" --cache-from "${REPO}:latest" .
+  post_build:
+    commands:
+      - docker push "${REPO}:$(cat REVISION)"
+      - docker push "${REPO}:latest"
