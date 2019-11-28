@@ -69,7 +69,7 @@ spec:
       serviceAccountName: spotgun
       containers:
       - name: spotgun
-        image: 789035092620.dkr.ecr.us-east-1.amazonaws.com/spotgun
+        image: errm/spotgun
         env:
           - name: NODE_NAME
             valueFrom:
