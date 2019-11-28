@@ -40,7 +40,7 @@ class Spotgun
 
   def drain
     kernel.system(
-      "/usr/bin/kubectl",
+      "/usr/local/bin/kubectl",
         "drain", node_name,
           "--grace-period=#{grace_period}",
           "--force",
